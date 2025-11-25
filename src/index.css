@@ -601,6 +601,11 @@
     margin-bottom: calc(var(--spacing) * 4);
   }
 
+  .my-6 {
+    margin-top: calc(var(--spacing) * 6);
+    margin-bottom: calc(var(--spacing) * 6);
+  }
+
   .block {
     display: block;
   }
