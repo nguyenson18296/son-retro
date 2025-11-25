@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react';
-import { Apple } from 'lucide-react';
+import { useEffect, useState } from "react";
+// import { Apple } from 'lucide-react';
+import AppleIcon from "../assets/apple_dark.svg";
 
 interface BootScreenProps {
   onBootComplete: () => void;
@@ -10,7 +11,7 @@ export function BootScreen({ onBootComplete }: BootScreenProps) {
 
   useEffect(() => {
     const progressInterval = setInterval(() => {
-      setProgress(prev => {
+      setProgress((prev) => {
         if (prev >= 100) {
           clearInterval(progressInterval);
           setTimeout(onBootComplete, 500);
@@ -30,7 +31,7 @@ export function BootScreen({ onBootComplete }: BootScreenProps) {
       <div className="text-center space-y-12">
         {/* Apple Logo */}
         <div className="flex justify-center">
-          <Apple className="w-24 h-24 text-white" fill="currentColor" />
+          <img src={AppleIcon} alt="Apple Logo" className="w-24 h-24" />
         </div>
 
         {/* Progress Bar */}
