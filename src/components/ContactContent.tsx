@@ -1,11 +1,16 @@
-import { useState } from 'react';
-import { Mail, Github, Linkedin, Twitter, Send } from 'lucide-react';
+import { useState } from "react";
+import { Send } from "lucide-react";
+
+import LinkedInLogo from "../assets/linkedin.svg";
+import GmailLogo from "../assets/gmail.svg";
+import GithubLogo from "../assets/github_light.svg";
+import TwitterLogo from "../assets/x.svg";
 
 export function ContactContent() {
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    message: ''
+    name: "",
+    email: "",
+    message: "",
   });
   const [submitted, setSubmitted] = useState(false);
 
@@ -16,16 +21,36 @@ export function ContactContent() {
   };
 
   const socialLinks = [
-    { icon: Mail, label: 'Email', href: 'mailto:your@email.com', color: 'from-blue-500 to-cyan-500' },
-    { icon: Github, label: 'GitHub', href: 'https://github.com', color: 'from-gray-700 to-gray-900' },
-    { icon: Linkedin, label: 'LinkedIn', href: 'https://linkedin.com', color: 'from-blue-600 to-blue-700' },
-    { icon: Twitter, label: 'Twitter', href: 'https://twitter.com', color: 'from-sky-400 to-blue-500' },
+    {
+      icon: GmailLogo,
+      label: "Email",
+      href: "mailto:nguyenson18296@email.com",
+      color: "from-blue-500 to-cyan-500",
+    },
+    {
+      icon: GithubLogo,
+      label: "GitHub",
+      href: "https://github.com/nguyenson18296?tab=stars",
+      color: "from-gray-700 to-gray-900",
+    },
+    {
+      icon: LinkedInLogo,
+      label: "LinkedIn",
+      href: "https://www.linkedin.com/in/son-nguyen-49a798248/",
+      color: "from-blue-600 to-blue-700",
+    },
+    {
+      icon: TwitterLogo,
+      label: "Twitter",
+      href: "https://twitter.com",
+      color: "from-sky-400 to-blue-500",
+    },
   ];
 
   return (
     <div className="space-y-6 max-w-2xl">
       <h2 className="text-2xl mb-3">Get In Touch</h2>
-      
+
       {/* Social Links */}
       <div>
         <h3 className="mb-4">Connect With Me</h3>
@@ -36,14 +61,17 @@ export function ContactContent() {
               <a
                 key={link.label}
                 href={link.href}
-                target={link.label !== 'Email' ? '_blank' : undefined}
-                rel={link.label !== 'Email' ? 'noopener noreferrer' : undefined}
+                target={link.label !== "Email" ? "_blank" : undefined}
+                rel={link.label !== "Email" ? "noopener noreferrer" : undefined}
                 className="group flex items-center gap-3 p-4 bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl border border-gray-200 hover:shadow-lg transition-all"
               >
-                <div className={`p-2 rounded-lg bg-gradient-to-br ${link.color} text-white`}>
-                  <Icon className="w-5 h-5" />
+                <div className={`p-2 rounded-lg bg-gradient-to-br text-white`}>
+                  {/* <Icon className="w-5 h-5" /> */}
+                  <img src={link.icon} alt={link.label} className="w-5 h-5" />
                 </div>
-                <span className="group-hover:text-indigo-600 transition-colors">{link.label}</span>
+                <span className="group-hover:text-indigo-600 transition-colors">
+                  {link.label}
+                </span>
               </a>
             );
           })}
@@ -59,7 +87,9 @@ export function ContactContent() {
             <input
               type="text"
               value={formData.name}
-              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+              onChange={(e) =>
+                setFormData({ ...formData, name: e.target.value })
+              }
               className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
               required
             />
@@ -70,7 +100,9 @@ export function ContactContent() {
             <input
               type="email"
               value={formData.email}
-              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+              onChange={(e) =>
+                setFormData({ ...formData, email: e.target.value })
+              }
               className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
               required
             />
@@ -80,7 +112,9 @@ export function ContactContent() {
             <label className="block mb-2 text-sm text-gray-700">Message</label>
             <textarea
               value={formData.message}
-              onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+              onChange={(e) =>
+                setFormData({ ...formData, message: e.target.value })
+              }
               className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all resize-none"
               rows={5}
               required

@@ -1,5 +1,6 @@
 import { useState, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { XIcon, Minus, Maximize2 } from "lucide-react";
+import { motion } from "framer-motion";
 
 interface WindowProps {
   title: string;
@@ -129,9 +130,9 @@ export function Window({
       dragElastic={0}
       dragConstraints={{
         left: 0,
-        right: window.innerWidth - 650,
+        right: window.innerWidth,
         top: 60,
-        bottom: window.innerHeight - 200,
+        bottom: window.innerHeight,
       }}
       onDragEnd={(e, info) => {
         setPosition({
@@ -171,7 +172,7 @@ export function Window({
             className="w-3 h-3 rounded-full bg-[#ff5f56] hover:bg-[#ff4137] border border-[#e0443e] transition-colors group relative"
           >
             <span className="absolute inset-0 flex items-center justify-center text-[8px] text-[#8b1a1a] opacity-0 group-hover:opacity-100">
-              ×
+              <XIcon />
             </span>
           </button>
           <button
@@ -179,7 +180,7 @@ export function Window({
             className="w-3 h-3 rounded-full bg-[#ffbd2e] hover:bg-[#ffaa00] border border-[#dea123] transition-colors group relative"
           >
             <span className="absolute inset-0 flex items-center justify-center text-[8px] text-[#8b5a00] opacity-0 group-hover:opacity-100">
-              −
+              <Minus />
             </span>
           </button>
           <button
@@ -187,7 +188,7 @@ export function Window({
             className="w-3 h-3 rounded-full bg-[#27c93f] hover:bg-[#1dad2b] border border-[#23a935] transition-colors group relative"
           >
             <span className="absolute inset-0 flex items-center justify-center text-[8px] text-[#0f5419] opacity-0 group-hover:opacity-100">
-              +
+              <Maximize2 />
             </span>
           </button>
         </div>

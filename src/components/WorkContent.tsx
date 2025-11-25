@@ -1,34 +1,90 @@
-import { ExternalLink } from 'lucide-react';
+import { ExternalLink } from "lucide-react";
 
 export function WorkContent() {
   const projects = [
     {
-      title: 'E-Commerce Platform',
-      year: '2024',
-      description: 'Built a full-stack e-commerce platform with real-time inventory management and seamless checkout experience.',
-      tech: ['React', 'Node.js', 'PostgreSQL'],
-      color: 'from-blue-500 to-cyan-500'
+      title: "Glo Platform",
+      year: "2024 - Present",
+      description: [
+        "Website: https://www.glo.com",
+        "Developing new features for Glo platform - a yoga streaming platform.",
+      ],
+      tech: [
+        "React",
+        "NextJS",
+        "TypeScript",
+        "EmberJS",
+        "Docker",
+        "Playwright",
+        "Tailwind",
+        "Vitest",
+      ],
+      color: "from-blue-500 to-cyan-500",
     },
     {
-      title: 'Task Management App',
-      year: '2023',
-      description: 'Developed a collaborative task management tool with real-time updates and team collaboration features.',
-      tech: ['TypeScript', 'WebSocket', 'MongoDB'],
-      color: 'from-purple-500 to-pink-500'
+      title: "Travelist",
+      year: "01/2024 - 10/2024",
+      description: [
+        "Website: https://travelist.jp/",
+        "Building a website that allows customers to purchase airplane tickets.",
+      ],
+      tech: ["Vue2", "Vue3", "TypeScript", "..."],
+      color: "from-purple-500 to-pink-500",
     },
     {
-      title: 'Portfolio Website',
-      year: '2023',
-      description: 'Created a macOS-inspired portfolio showcasing projects with an elegant, intuitive interface.',
-      tech: ['React', 'Tailwind', 'Motion'],
-      color: 'from-orange-500 to-red-500'
-    }
+      title: "GoodData",
+      year: "06/2021 - 12/2023",
+      description: [
+        "Website: http://gooddata.com/",
+        "Platform for data processing, collection and visualization",
+      ],
+      tech: [
+        "React",
+        "Redux",
+        "Storybook",
+        "Jest",
+        "Enzyme",
+        "Cypress",
+        "Docker",
+        "TypeScript",
+        "...",
+      ],
+      color: "from-orange-500 to-red-500",
+    },
+    {
+      title: "Admin Dashboard",
+      year: "04/2020 - 05/2021",
+      description: [
+        "Building CMS to management users, transactions, databases,...",
+      ],
+      tech: ["React", "WebSocket", "Socket.io"],
+      color: "from-green-500 to-blue-500",
+    },
+    {
+      title: "Sporta",
+      year: "09/2020 - 02/2021",
+      description: [
+        "https://www.sporta.vn/",
+        "A social network for individuals or teams to find and organize football matches, tournaments",
+      ],
+      tech: ["NextJS", "ChartJS", "Styled component", "..."],
+      color: "from-green-500 to-blue-500",
+    },
+    {
+      title: "Some outsource projects",
+      year: "10/2018 - 03-2020",
+      description: [
+        "Take responsibility for the development of some outsource projects",
+      ],
+      tech: ["ReactJS", "VueJS"],
+      color: "from-green-500 to-blue-500",
+    },
   ];
 
   return (
     <div className="space-y-6 max-w-2xl">
       <h2 className="text-2xl mb-3">Featured Work</h2>
-      
+
       <div className="space-y-4">
         {projects.map((project, index) => (
           <div
@@ -44,13 +100,18 @@ export function WorkContent() {
                 <span className="text-sm text-gray-500">{project.year}</span>
               </div>
             </div>
-            
-            <p className="text-gray-600 mb-4 leading-relaxed">
-              {project.description}
-            </p>
-            
+
+            <ul
+              className="text-gray-600 mb-4 leading-relaxed"
+              style={{ listStyleType: "disc" }}
+            >
+              {project.description.map((desc, index) => (
+                <li key={index}>{desc}</li>
+              ))}
+            </ul>
+
             <div className="flex flex-wrap gap-2">
-              {project.tech.map(tech => (
+              {project.tech.map((tech) => (
                 <span
                   key={tech}
                   className="px-3 py-1 bg-white rounded-full text-sm text-gray-700 border border-gray-300"
@@ -65,7 +126,8 @@ export function WorkContent() {
 
       <div className="bg-blue-50 border border-blue-200 rounded-xl p-4">
         <p className="text-sm text-blue-900">
-          💡 <strong>Tip:</strong> Click on any project to view the live demo and source code.
+          💡 <strong>Tip:</strong> Click on any project to view the live demo
+          and source code.
         </p>
       </div>
     </div>

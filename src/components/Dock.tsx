@@ -1,4 +1,5 @@
 import { LucideIcon } from "lucide-react";
+import { motion } from "framer-motion";
 
 interface OpenWindow {
   id: string;
@@ -51,14 +52,27 @@ export function Dock({
             const isOpen = openWindows.some((w) => w.id === app.id);
 
             return (
-              <button
+              <motion.button
                 key={app.id}
                 onClick={(e) => handleClick(app, isOpen, e)}
                 className="relative group"
+                whileHover={{ y: -12, scale: 1.2 }}
+                whileTap={{ scale: 0.95 }}
+                transition={{
+                  type: "spring",
+                  stiffness: 400,
+                  damping: 17,
+                }}
               >
-                <div className="bg-gradient-to-br from-white to-gray-50 backdrop-blur-xl p-3 rounded-xl shadow-md border border-gray-200 hover:scale-125 hover:-translate-y-2 transition-all duration-200">
+                <motion.div
+                  className="bg-gradient-to-br from-white to-gray-50 backdrop-blur-xl p-3 rounded-xl shadow-md border border-gray-200 origin-bottom"
+                  whileHover={{
+                    boxShadow:
+                      "0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)",
+                  }}
+                >
                   <Icon className="w-8 h-8 text-indigo-600" strokeWidth={1.5} />
-                </div>
+                </motion.div>
 
                 {/* App name tooltip */}
                 <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-gray-900/90 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">
@@ -69,7 +83,7 @@ export function Dock({
                 {isOpen && (
                   <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 bg-gray-700 rounded-full" />
                 )}
-              </button>
+              </motion.button>
             );
           })}
         </div>

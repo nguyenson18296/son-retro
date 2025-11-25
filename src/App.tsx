@@ -11,6 +11,7 @@ import { ContactContent } from "./components/ContactContent";
 import { Dock } from "./components/Dock";
 import { MenuBar } from "./components/MenuBar";
 import { BootScreen } from "./components/BootScreen";
+import { Terminal } from "./components/Terminal";
 
 interface OpenWindow {
   id: string;
@@ -206,6 +207,8 @@ export default function App() {
         onAppClick={handleIconClick}
         onDockClick={handleDockClick}
       />
+
+      <Terminal />
     </div>
   );
 }
