@@ -1,5 +1,7 @@
-import { useState } from 'react';
-import { Apple, Wifi, Battery, Search } from 'lucide-react';
+import { useState } from "react";
+import { Wifi, Battery, Search } from "lucide-react";
+
+import AppleDark from "../assets/apple-dark.svg";
 
 export function MenuBar() {
   const [time, setTime] = useState(new Date());
@@ -13,13 +15,13 @@ export function MenuBar() {
   });
 
   const formatTime = (date: Date) => {
-    return date.toLocaleTimeString('en-US', { 
-      weekday: 'short',
-      month: 'short',
-      day: 'numeric',
-      hour: 'numeric',
-      minute: '2-digit',
-      hour12: true 
+    return date.toLocaleTimeString("en-US", {
+      weekday: "short",
+      month: "short",
+      day: "numeric",
+      hour: "numeric",
+      minute: "2-digit",
+      hour12: true,
     });
   };
 
@@ -28,7 +30,7 @@ export function MenuBar() {
       {/* Left side */}
       <div className="flex items-center gap-4">
         <button className="hover:bg-black/5 px-2 py-1 rounded transition-colors">
-          <Apple className="w-4 h-4" fill="currentColor" />
+          <img src={AppleDark} alt="Apple" className="w-4 h-4" />
         </button>
         <button className="hover:bg-black/5 px-2 py-1 rounded transition-colors">
           Portfolio
@@ -46,9 +48,7 @@ export function MenuBar() {
         <button className="hover:bg-black/5 p-1 rounded transition-colors">
           <Battery className="w-4 h-4" />
         </button>
-        <span className="text-xs">
-          {formatTime(time)}
-        </span>
+        <span className="text-xs">{formatTime(time)}</span>
       </div>
     </div>
   );

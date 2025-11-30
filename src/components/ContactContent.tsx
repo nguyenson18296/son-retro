@@ -66,7 +66,6 @@ export function ContactContent() {
                 className="group flex items-center gap-3 p-4 bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl border border-gray-200 hover:shadow-lg transition-all"
               >
                 <div className={`p-2 rounded-lg bg-gradient-to-br text-white`}>
-                  {/* <Icon className="w-5 h-5" /> */}
                   <img src={link.icon} alt={link.label} className="w-5 h-5" />
                 </div>
                 <span className="group-hover:text-indigo-600 transition-colors">

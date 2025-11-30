@@ -71,7 +71,7 @@ export function WorkContent() {
         "https://www.sporta.vn/",
         "A social network for individuals or teams to find and organize football matches, tournaments",
       ],
-      tech: ["NextJS", "ChartJS", "Styled component", "..."],
+      tech: ["NextJS", "ChartJS", "Styled component", "Redux", "..."],
       color: "from-green-500 to-blue-500",
     },
     {
@@ -80,7 +80,7 @@ export function WorkContent() {
       description: [
         "Take responsibility for the development of some outsource projects",
       ],
-      tech: ["ReactJS", "VueJS"],
+      tech: ["ReactJS", "VueJS", "Redux", "Vuex", "..."],
       color: "from-green-500 to-blue-500",
     },
   ];
@@ -120,6 +120,7 @@ export function WorkContent() {
                   <span
                     key={tech}
                     className="px-3 py-1 bg-white rounded-full text-sm text-gray-700 border border-gray-300"
+                    onClick={(e) => e.stopPropagation()}
                   >
                     {tech}
                   </span>

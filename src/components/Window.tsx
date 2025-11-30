@@ -1,6 +1,6 @@
-import { useState, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { XIcon, Minus, Maximize2 } from "lucide-react";
-import { motion } from "framer-motion";
+import { motion, useMotionValue, animate, useTransform } from "framer-motion";
 
 interface WindowProps {
   title: string;
@@ -81,90 +81,125 @@ export function Window({
     return { x: finalX, y: finalY };
   };
 
-  const [position, setPosition] = useState(calculateOptimalPosition());
-  const nodeRef = useRef(null);
+  const targetPosition = calculateOptimalPosition();
+  const initialPos = originPosition || {
+    x: window.innerWidth / 2,
+    y: window.innerHeight / 2,
+  };
+
+  // Store the position before maximizing to restore later
+  const preMaximizePosition = useRef({ x: targetPosition.x, y: targetPosition.y });
+
+  // Motion values for drag - start at initial position
+  const x = useMotionValue(initialPos.x);
+  const y = useMotionValue(initialPos.y);
+  const scale = useMotionValue(0.3);
+  const opacity = useMotionValue(0);
+  const width = useMotionValue(650);
+  const height = useMotionValue(window.innerHeight * 0.8);
+  const borderRadius = useMotionValue(12);
+
+  const springConfig = {
+    type: "spring" as const,
+    stiffness: 400,
+    damping: 30,
+    mass: 0.8,
+  };
+
+  // Animate to target position on mount
+  useEffect(() => {
+    animate(x, targetPosition.x, springConfig);
+    animate(y, targetPosition.y, springConfig);
+    animate(scale, 1, springConfig);
+    animate(opacity, 1, springConfig);
+  }, []);
 
   const handleMaximize = () => {
+    const menuBarHeight = 28;
+    const dockHeight = 84;
+    const fullWidth = window.innerWidth;
+    const fullHeight = window.innerHeight - menuBarHeight - dockHeight;
+
+    if (!isMaximized) {
+      // Save current position before maximizing
+      preMaximizePosition.current = { x: x.get(), y: y.get() };
+
+      // Animate to fullscreen
+      animate(x, 0, springConfig);
+      animate(y, menuBarHeight, springConfig);
+      animate(width, fullWidth, springConfig);
+      animate(height, fullHeight, springConfig);
+      animate(borderRadius, 0, springConfig);
+    } else {
+      // Restore to previous position
+      animate(x, preMaximizePosition.current.x, springConfig);
+      animate(y, preMaximizePosition.current.y, springConfig);
+      animate(width, 650, springConfig);
+      animate(height, window.innerHeight * 0.8, springConfig);
+      animate(borderRadius, 12, springConfig);
+    }
+
     setIsMaximized(!isMaximized);
   };
 
-  const windowStyle = isMaximized
-    ? {
-        left: 0,
-        top: "28px",
-        width: "100%",
-        height: "calc(100% - 112px)",
-        transform: "none",
-      }
-    : {};
-
-  // Calculate initial position for animation
-  const getInitialPosition = () => {
-    if (!originPosition) {
-      return { x: window.innerWidth / 2, y: window.innerHeight / 2 };
-    }
-    return originPosition;
-  };
-
-  const initialPos = getInitialPosition();
-
-  // Calculate centered position
-  const centerLeft = position.x;
-  const centerTop = position.y;
-
   const windowContent = (
     <motion.div
-      ref={nodeRef}
-      className={`backdrop-blur-2xl bg-white/95 rounded-xl shadow-2xl flex flex-col overflow-hidden ${
-        isMaximized ? "" : "w-[650px] max-w-[90vw]"
-      }`}
+      className="backdrop-blur-2xl bg-white/95 shadow-2xl flex flex-col overflow-hidden max-w-[100vw]"
       style={{
         position: "absolute",
         zIndex,
-        maxHeight: isMaximized ? undefined : "80vh",
-        ...windowStyle,
+        x,
+        y,
+        width,
+        height,
+        scale,
+        opacity,
+        borderRadius,
       }}
       onMouseDown={onFocus}
       drag={!isMaximized}
+      dragListener={false}
       dragMomentum={false}
       dragElastic={0}
       dragConstraints={{
         left: 0,
-        right: window.innerWidth,
+        right: window.innerWidth - 650,
         top: 60,
-        bottom: window.innerHeight,
-      }}
-      onDragEnd={(e, info) => {
-        setPosition({
-          x: centerLeft + info.offset.x,
-          y: centerTop + info.offset.y,
-        });
-      }}
-      initial={{
-        opacity: 0,
-        scale: 0.3,
-        left: initialPos.x,
-        top: initialPos.y,
-      }}
-      animate={{
-        opacity: 1,
-        scale: 1,
-        left: centerLeft,
-        top: centerTop,
+        bottom: window.innerHeight - 200,
       }}
       exit={{
         opacity: 0,
         scale: 0.8,
       }}
-      transition={{
-        type: "spring",
-        stiffness: 300,
-        damping: 25,
-        mass: 0.5,
-      }}
     >
       {/* Title Bar */}
-      <div className="px-4 py-3 flex items-center justify-between cursor-move select-none bg-gradient-to-b from-white/50 to-transparent border-b border-gray-200/50">
+      <motion.div
+        className="px-4 py-3 flex items-center justify-between cursor-move select-none bg-gradient-to-b from-white/50 to-transparent border-b border-gray-200/50"
+        onDoubleClick={(e) => {
+          // Prevent double-click on buttons from triggering maximize
+          const target = e.target as HTMLElement;
+          if (target.closest("button")) {
+            return;
+          }
+          handleMaximize();
+        }}
+        onPointerDown={(e) => {
+          if (!isMaximized) {
+            // Prevent drag from starting on buttons
+            const target = e.target as HTMLElement;
+            if (target.closest("button")) {
+              return;
+            }
+            e.preventDefault();
+          }
+        }}
+        onPan={(e, info) => {
+          if (!isMaximized) {
+            x.set(x.get() + info.delta.x);
+            y.set(y.get() + info.delta.y);
+          }
+        }}
+      >
         <div className="flex items-center gap-2">
           {/* Traffic Light Buttons */}
           <button
@@ -195,18 +230,20 @@ export function Window({
         <div className="absolute left-1/2 -translate-x-1/2 text-sm text-gray-700">
           {title}
         </div>
-      </div>
+      </motion.div>
 
       {/* Window Content */}
-      <div className="flex-1 overflow-auto p-6 bg-white/80">{children}</div>
+      <div
+        className={`flex-1 overflow-auto p-6 bg-white/80 ${
+          isMaximized ? "flex flex-col items-center" : ""
+        }`}
+      >
+        <div className={isMaximized ? "w-full max-w-[650px]" : "w-full"}>
+          {children}
+        </div>
+      </div>
     </motion.div>
   );
 
-  if (isMaximized) {
-    return windowContent;
-  }
-
-  // For non-maximized windows, return windowContent directly
-  // Framer Motion handles the positioning
   return windowContent;
 }

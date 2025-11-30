@@ -27,7 +27,9 @@ export function ResumeContent() {
               <div className="flex justify-between items-start mb-2">
                 <div>
                   <h4>Senior Web Engineer</h4>
-                  <p className="text-sm text-gray-600">Glo Digital Inc.</p>
+                  <a href="https://glo.com/" target="_blank">
+                    <p className="text-sm text-gray-600">Glo Digital Inc.</p>
+                  </a>
                 </div>
                 <span className="text-xs px-3 py-1 bg-gray-100 text-gray-700 rounded-full">
                   11/2024 - Present
@@ -119,7 +121,9 @@ export function ResumeContent() {
               <div className="flex justify-between items-start mb-2">
                 <div>
                   <h4>Web Engineer</h4>
-                  <p className="text-sm text-gray-600">LHV software</p>
+                  <a href="https://lhv.vn/" target="_blank">
+                    <p className="text-sm text-gray-600">LHV software</p>
+                  </a>
                 </div>
                 <span className="text-xs px-3 py-1 bg-gray-100 text-gray-700 rounded-full">
                   06/2021 - 12/2023
@@ -227,7 +231,9 @@ export function ResumeContent() {
               <div className="flex justify-between items-start mb-2">
                 <div>
                   <h4>Web Engineer</h4>
-                  <p className="text-sm text-gray-600">Rockship</p>
+                  <a href="https://rockship.co/" target="_blank">
+                    <p className="text-sm text-gray-600">Rockship</p>
+                  </a>
                 </div>
                 <span className="text-xs px-3 py-1 bg-gray-100 text-gray-700 rounded-full">
                   10/2018 - 02/2020
